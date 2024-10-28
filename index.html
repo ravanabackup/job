@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #2d2d2d;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title {
+            color: #d4b5ff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dates {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-label {
+            background-color: rgba(168, 85, 247, 0.2);
+            color: #d4b5ff;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .progress-bar {
+            background-color: rgba(168, 85, 247, 0.2);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: #a855f7;
+            height: 100%;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background-color: #3d3d3d;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            color: #d4b5ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            color: #d4b5ff;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <h1 class="title">Career Journey Timeline</h1>
+            <div class="dates">02/05/2023 - 31/03/2054</div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-label">Career Progress</span>
+                <span class="progress-label">
+                    <span id="progress-percentage">0</span>%
+                </span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-label">Time Passed</div>
+                <div class="stat-value" id="days-passed">0</div>
+                <div class="stat-label">days</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⌛</div>
+                <div class="stat-label">Time Left</div>
+                <div class="stat-value" id="days-left">0</div>
+                <div class="stat-label">days</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-label">Total Journey</div>
+                <div class="stat-value" id="total-days">0</div>
+                <div class="stat-label">days</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateTimeline() {
+            const joinDate = new Date('2023-05-02T12:00:00');
+            const retireDate = new Date('2054-03-31T17:30:00');
+            const now = new Date();
+
+            const totalDays = Math.floor((retireDate - joinDate) / (1000 * 60 * 60 * 24));
+            const daysPassed = Math.floor((now - joinDate) / (1000 * 60 * 60 * 24));
+            const daysLeft = Math.floor((retireDate - now) / (1000 * 60 * 60 * 24));
+            const percentage = (daysPassed / totalDays) * 100;
+
+            document.getElementById('progress-percentage').textContent = percentage.toFixed(2);
+            document.getElementById('progress-fill').style.width = `${percentage}%`;
+            
+            document.getElementById('days-passed').textContent = daysPassed.toLocaleString('en-IN');
+            document.getElementById('days-left').textContent = daysLeft.toLocaleString('en-IN');
+            document.getElementById('total-days').textContent = totalDays.toLocaleString('en-IN');
+        }
+
+        // Update immediately and then every second
+        updateTimeline();
+        setInterval(updateTimeline, 1000);
+    </script>
+</body>
+</html>
